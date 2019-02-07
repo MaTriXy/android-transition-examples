@@ -16,11 +16,10 @@
 package com.google.samples.gridtopager;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.appcompat.app.AppCompatActivity;
 import com.google.samples.gridtopager.fragment.GridFragment;
-import com.google.samples.gridtopager.R;
 
 /**
  * Grid to pager app's main activity.
@@ -54,8 +53,8 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @Override
-  public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-    super.onSaveInstanceState(outState, outPersistentState);
+  protected void onSaveInstanceState(Bundle outState) {
+    super.onSaveInstanceState(outState);
     outState.putInt(KEY_CURRENT_POSITION, currentPosition);
   }
 }

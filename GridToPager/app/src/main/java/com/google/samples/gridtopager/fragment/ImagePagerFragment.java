@@ -17,10 +17,10 @@
 package com.google.samples.gridtopager.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.SharedElementCallback;
-import android.support.v4.view.ViewPager;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.core.app.SharedElementCallback;
+import androidx.viewpager.widget.ViewPager;
 import android.transition.Transition;
 import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
@@ -45,10 +45,6 @@ public class ImagePagerFragment extends Fragment {
       @Nullable Bundle savedInstanceState) {
     viewPager = (ViewPager) inflater.inflate(R.layout.fragment_pager, container, false);
     viewPager.setAdapter(new ImagePagerAdapter(this));
-    if (savedInstanceState != null) {
-      return viewPager;
-    }
-
     // Set the current position and add a listener that will update the selection coordinator when
     // paging the images.
     viewPager.setCurrentItem(MainActivity.currentPosition);
@@ -60,7 +56,11 @@ public class ImagePagerFragment extends Fragment {
     });
 
     prepareSharedElementTransition();
-    postponeEnterTransition();
+
+    // Avoid a postponeEnterTransition on orientation change, and postpone only of first creation.
+    if (savedInstanceState == null) {
+      postponeEnterTransition();
+    }
 
     return viewPager;
   }
